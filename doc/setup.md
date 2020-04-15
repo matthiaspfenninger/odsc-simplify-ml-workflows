@@ -5,13 +5,15 @@ To prepare your cluster for the workshop from the infrastructure (mainly S3 Obje
 Make sure you have `git`, `ansible`, `oc` and Python `openshift` packages installed, otherwise following commands might fail.
 
 First you will need to clone the repository and enter the directory with Ansible playbooks.
-```
+
+```bash
 git clone https://github.com/redhat-cop/agnosticd
 cd agnosticd/ansible
 ```
 
 Next you will need couple environment variables set for the following commands to work.
-```
+
+```bash
 OCP_ADMIN_USERNAME=opentlc-mgr
 START_NUM_FOR_USER=1
 NUM_OF_USERS=5
@@ -19,7 +21,7 @@ NUM_OF_USERS=5
 
 The following command deploys the infrastructure part of the workshop
 
-```
+```bash
 ansible-playbook --connection local -i localhost, \
 configs/ocp-workloads/ocp-workload.yml \
 -e 'ocp_username='${OCP_ADMIN_USERNAME} \
@@ -30,13 +32,13 @@ configs/ocp-workloads/ocp-workload.yml \
 
 Once Rook Ceph is deployed and Object Storage is created (i.e. the above command successfully finishes) you need to extract an IP address and port of the S3 endpoint. The following command takes care of it and sets the needed environment variables as well.
 
-```
+```bash
 eval $(oc get service -n rook-ceph rook-ceph-rgw-my-store -o jsonpath='{"ROOK_CEPH_RGW_SERVICE_IP="}{.spec.clusterIP}{"\n"}{"ROOK_CEPH_RGW_PORT="}{.spec.ports[0].port}{"\n"}')
 ```
 
 The last command before you can start the workshop is to create users, user namespaces and deploy the Open Data Hub operator for each user.
 
-```
+```bash
 ansible-playbook --connection local -i localhost, \
 configs/ocp-workloads/ocp-workload.yml \
 -e 'ocp_username='${OCP_ADMIN_USERNAME} \
