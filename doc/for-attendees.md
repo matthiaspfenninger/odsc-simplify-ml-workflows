@@ -72,7 +72,7 @@ In order to get started with the Open Data Hub, you need to deploy it into your 
 
 ## Streaming Data and Monitoring Infrastructure
 
-1. The `data-engineering-and-machine-learning-workshop.git/source/notebooks/` folder contains two other notebooks called `Kafka Producer` and `Kafka Consumer`. Open both of them (start with the producer) and start running the cells in both of them. Leave the cells running. 
+1. The `data-engineering-and-machine-learning-workshop.git/source/notebooks/` folder contains two other notebooks called `Kafka Producer` and `Kafka Consumer`. Open both of them (start with the producer) and start running the cells in both of them. Leave the cells running.
 
     The producer notebook is simply writing to the Kafka cluster deployed by the ODH Operator on a sample topic, whereas the consumer is constantly reading all the messages that are written there.
 
@@ -84,6 +84,28 @@ In order to get started with the Open Data Hub, you need to deploy it into your 
 4. Finally, click on `Import Dashboard -> Upload.json File` and upload `Spark Metrics.json` to see how metrics changed over time as the notebooks ran.
 ![grafana-import](../images/grafana-import.png)
 
-5. Follow the instructions to create the Kafka dashboard. The final result of the dashboard can be found under `/source/dashboards/Kafka.json`
+5. Grafana is a dashboarding tool that provides an easy and powerful interface to visualize metrics. These dashboards can provide SREs with an understanding of the health of the system with just a quick glance. Attempt to replicate the following dashboard.
+![grafana-kafka-dashboard](../images/grafana-kafka-dashboard.png)
+You will need to look at the following metrics:
 
-6. That's it!  Thank you for participating in this tutorial.  If you have questions or would like to contribute to the Open Data Hub project, you can find us at [https://opendatahub.io/community.html](https://opendatahub.io/community.html).
+    - kafka_server_replicamanager_leadercount
+    - kafka_server_replicamanager_partitioncount
+    - kafka_server_replicamanager_underreplicatedpartitions
+    - kafka_controller_kafkacontroller_offlinepartitionscount
+    - kafka_server_brokertopicmetrics_messagesin_total
+
+    The following promql functions will be useful:
+
+    - sum
+    - rate
+
+    The following Grafana panel types will be useful:
+
+    - Graph
+    - Singlestat
+
+    The final dashboard file can be found at `/source/dashboards/Kafka.json`
+
+6. If you are interested in using Grafana and Prometheus for data science tasks we would recommend the following [workshop](https://learn.openshift.com/introduction/deploy-prometheus-grafana).
+
+7. That's it!  Thank you for participating in this tutorial.  If you have questions or would like to contribute to the Open Data Hub project, you can find us at [https://opendatahub.io/community.html](https://opendatahub.io/community.html).
